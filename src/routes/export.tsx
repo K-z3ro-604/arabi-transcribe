@@ -79,6 +79,11 @@ function ExportPage() {
         el.style.color = muted ? "#8a8070" : "#1f1b24";
         el.style.backgroundColor = rule ? "#e6dccf" : "transparent";
         el.style.boxShadow = "none";
+        el.style.borderColor = "transparent";
+        el.style.outlineColor = "transparent";
+        el.style.textDecorationColor = "currentColor";
+        el.style.caretColor = "auto";
+        el.style.columnRuleColor = "transparent";
       });
       clone.style.backgroundColor = "#ffffff";
       const holder = document.createElement("div");
