@@ -39,6 +39,7 @@
   --color-ring: var(--ring);
   --color-brand: var(--brand);
   --color-brand-2: var(--brand-2);
+  --color-success: var(--success);
   --color-gold: var(--gold);
   --color-ink: var(--ink);
   --color-surface: var(--surface);
@@ -75,6 +76,7 @@
   --ring: oklch(0.685 0.206 32.5);
   --brand: oklch(0.685 0.206 32.5);
   --brand-2: oklch(0.645 0.215 16.4);
+  --success: oklch(0.62 0.16 150);
   --gold: oklch(0.849 0.148 80.7);
   --ink: oklch(0.224 0.019 289.3);
   --surface: oklch(0.981 0.011 54.5);
@@ -102,6 +104,7 @@
   --ring: oklch(0.72 0.2 32.5);
   --brand: oklch(0.72 0.2 32.5);
   --brand-2: oklch(0.68 0.21 16.4);
+  --success: oklch(0.72 0.16 150);
   --gold: oklch(0.849 0.148 80.7);
   --ink: oklch(0.97 0.01 54.5);
   --surface: oklch(0.185 0.02 289.3);
