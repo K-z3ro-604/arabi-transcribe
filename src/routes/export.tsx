@@ -39,6 +39,28 @@ const A4_W = 794; // px @96dpi
 const MM = 3.7795; // px per mm
 const PAGE_PX_TO_PT = 0.75;
 
+// html2canvas can't parse oklch(): temporarily replace theme variables with rgb equivalents
+function flattenOklchVars() {
+  const root = document.documentElement;
+  const cs = getComputedStyle(root);
+  const ctx = document.createElement("canvas").getContext("2d", { willReadFrequently: true });
+  const changed: string[] = [];
+  if (!ctx) return () => {};
+  for (let i = 0; i < cs.length; i++) {
+    const name = cs[i]!;
+    if (!name.startsWith("--")) continue;
+    const val = cs.getPropertyValue(name).trim();
+    if (!/^oklch\(/.test(val)) continue;
+    ctx.clearRect(0, 0, 1, 1);
+    ctx.fillStyle = val;
+    ctx.fillRect(0, 0, 1, 1);
+    const [r, g, b, a] = ctx.getImageData(0, 0, 1, 1).data;
+    root.style.setProperty(name, `rgba(${r}, ${g}, ${b}, ${(a ?? 255) / 255})`);
+    changed.push(name);
+  }
+  return () => changed.forEach((n) => root.style.removeProperty(n));
+}
+
 function slugName(ext: string) {
   return `${BOOK.title.replace(/\s+/g, "-")}.${ext}`;
 }
@@ -90,6 +112,7 @@ function ExportPage() {
       holder.style.cssText = `position:fixed;top:0;inset-inline-start:-10000px;width:${A4_W}px;`;
       holder.appendChild(clone);
       document.body.appendChild(holder);
+      const restoreVars = flattenOklchVars();
       await html2pdf()
         .set({
           margin: 0,
@@ -101,6 +124,7 @@ function ExportPage() {
         .from(clone)
         .save();
       holder.remove();
+      restoreVars();
     } finally {
       setBusy(null);
     }
