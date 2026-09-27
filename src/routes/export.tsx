@@ -5,7 +5,7 @@ export const Route = createFileRoute("/export")({
   head: () => ({
     meta: [
       { title: "تنسيق وتصدير — صوتُك" },
-      { name: "description", content:نسخ"صمّم النص النهائي وصدّره إلى Word أو PDF أو نص عادي." },
+      { name: "description", content: "صمّم النص النهائي وصدّره إلى Word أو PDF أو نص عادي." },
       { property: "og:title", content: "تنسيق وتصدير — صوتُك" },
       { property: "og:description", content: "صمّم النص النهائي وصدّره بضغطة واحدة." },
       { property: "og:type", content: "website" },
