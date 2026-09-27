@@ -66,19 +66,20 @@ function diff(a: string, b: string): Token[] {
   const x = tokenize(a);
   const y = tokenize(b);
   const n = x.length, m = y.length;
-  const dp = Array.from({ length: n + 1 }, () => new Array<number>(m + 1).fill(0));
+  const dp: number[][] = Array.from({ length: n + 1 }, () => new Array<number>(m + 1).fill(0));
+  const at = (i: number, j: number) => dp[i]![j]!;
   for (let i = n - 1; i >= 0; i--)
     for (let j = m - 1; j >= 0; j--)
-      dp[i][j] = x[i] === y[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+      dp[i]![j] = x[i] === y[j] ? at(i + 1, j + 1) + 1 : Math.max(at(i + 1, j), at(i, j + 1));
   const out: Token[] = [];
   let i = 0, j = 0;
   while (i < n && j < m) {
-    if (x[i] === y[j]) { out.push({ type: "same", text: x[i] }); i++; j++; }
-    else if (dp[i + 1][j] >= dp[i][j + 1]) out.push({ type: "del", text: x[i++] });
-    else out.push({ type: "add", text: y[j++] });
+    if (x[i] === y[j]) { out.push({ type: "same", text: x[i]! }); i++; j++; }
+    else if (at(i + 1, j) >= at(i, j + 1)) out.push({ type: "del", text: x[i++]! });
+    else out.push({ type: "add", text: y[j++]! });
   }
-  while (i < n) out.push({ type: "del", text: x[i++] });
-  while (j < m) out.push({ type: "add", text: y[j++] });
+  while (i < n) out.push({ type: "del", text: x[i++]! });
+  while (j < m) out.push({ type: "add", text: y[j++]! });
   return out;
 }
 
