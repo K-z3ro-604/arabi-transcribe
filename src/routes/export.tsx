@@ -187,10 +187,10 @@ function ExportPage() {
           </div>
         </aside>
 
-        <section className="rounded-3xl bg-muted p-4 md:p-8">
+        <section className="min-w-0 overflow-hidden rounded-3xl bg-muted p-4 md:p-8">
           <p className="mb-4 text-center text-xs font-bold text-muted-foreground">معاينة الطباعة · A4</p>
           <div ref={wrapRef} className="mx-auto w-full max-w-[794px]">
-            <div style={{ height: 1123 * scale }}>
+            <div style={{ height: 1123 * scale, overflow: "hidden" }}>
               <div style={{ width: A4_W, transform: `scale(${scale})`, transformOrigin: "top right" }}>
                 <div
                   ref={pageRef}
