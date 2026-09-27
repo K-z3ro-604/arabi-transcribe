@@ -71,6 +71,16 @@ function ExportPage() {
       await document.fonts.ready;
       const clone = pageRef.current.cloneNode(true) as HTMLElement;
       clone.style.minHeight = "auto";
+      // html2canvas can't parse oklch theme colors — use plain print colors
+      [clone, ...Array.from(clone.querySelectorAll<HTMLElement>("*"))].forEach((el) => {
+        const muted = el.classList.contains("text-muted-foreground");
+        const rule = el.classList.contains("bg-border");
+        el.removeAttribute("class");
+        el.style.color = muted ? "#8a8070" : "#1f1b24";
+        el.style.backgroundColor = rule ? "#e6dccf" : "transparent";
+        el.style.boxShadow = "none";
+      });
+      clone.style.backgroundColor = "#ffffff";
       const holder = document.createElement("div");
       holder.style.cssText = `position:fixed;top:0;inset-inline-start:-10000px;width:${A4_W}px;`;
       holder.appendChild(clone);
